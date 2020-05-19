@@ -1,11 +1,17 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace Desafio.Core.Output
 {
     [JsonObject("results")]
     public class Filme
     {
+        public Filme()
+        {
+            this.Generos = new List<Genero>();
+        }
+
         public int Id { get; set; }
 
         [JsonProperty("popularity")]
@@ -33,7 +39,12 @@ namespace Desafio.Core.Output
         [JsonProperty("overview")]
         public string Resumo { get; set; }
 
+        [JsonProperty("genre_ids")] 
+        public IEnumerable<int> GeneroIds { get; set; }
+
         [JsonProperty("release_date")] 
         public string LancamentoEm { get; set; }
+
+        public List<Genero> Generos { get; set; }
     }
 }

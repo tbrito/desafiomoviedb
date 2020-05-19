@@ -2,7 +2,7 @@
 
 namespace Desafio.Core.Contratos
 {
-    public interface ITheMovieDb
+    public interface IMovieApi
     {
         Estreias ObterTodasEstreias();
 

@@ -4,27 +4,18 @@ using Desafio.Core.Settings;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RestSharp;
-using System;
 
 namespace Desafio.Infra.Servicos
 {
-    public class TheMovieDb : ServicoRest, ITheMovieDb
+    public class MovieApi : ServicoRest, IMovieApi
     {
-        public TheMovieDb(IOptions<EndPoints> options) : 
+        public MovieApi(IOptions<EndPoints> options) : 
             base(options)
         {
         }
 
         public Estreias ObterTodasEstreias()
         {
-            if (this.endpoints.TheMovieDbSettings == null)
-            {
-                throw new InvalidOperationException(
-@"Não foi possível estabelecer conexão.
-Parametros de conexão com TheMovieDb.org não foram encontrados.
-Verifique appsettings.json");
-            }
-
             var estreias = this.ObterEstreias();
 
             if (estreias.TotalPaginas == 1)
@@ -50,6 +41,7 @@ Verifique appsettings.json");
             };
 
             request.AddParameter("api_key", this.endpoints.TheMovieDbSettings.Key, ParameterType.QueryString);
+            request.AddParameter("language", this.endpoints.TheMovieDbSettings.Idioma, ParameterType.QueryString);
             request.AddParameter("page", pagina, ParameterType.QueryString);
 
             var response = this.Executar(request);

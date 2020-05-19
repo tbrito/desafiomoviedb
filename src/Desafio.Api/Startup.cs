@@ -25,8 +25,8 @@ namespace Desafio.Api
             services.AddCors();
 
             services.AddClassesMatchingInterfaces(typeof(IConsultaFilmeServico).Assembly);
-            services.AddClassesMatchingInterfaces(typeof(ITheMovieDb).Assembly);
-            services.AddClassesMatchingInterfaces(typeof(TheMovieDb).Assembly);
+            services.AddClassesMatchingInterfaces(typeof(Core.Contratos.IMovieApi).Assembly);
+            services.AddClassesMatchingInterfaces(typeof(Infra.Servicos.MovieApi).Assembly);
 
             services.Configure<EndPoints>(Configuration.GetSection("Endpoints"));
         }

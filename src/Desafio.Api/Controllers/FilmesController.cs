@@ -1,6 +1,5 @@
 ﻿using Desafio.Core.Contratos;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace Desafio.Api.Controllers
 {

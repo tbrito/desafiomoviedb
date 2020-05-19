@@ -13,6 +13,14 @@ namespace Desafio.Infra.Servicos
         
         public ServicoRest(IOptions<EndPoints> options)
         {
+            if (options.Value.TheMovieDbSettings == null)
+            {
+                throw new InvalidOperationException(
+@"Não foi possível estabelecer conexão.
+Parametros de conexão com TheMovieDb.org não foram encontrados.
+Verifique appsettings.json");
+            }
+
             this.endpoints = options.Value;
         }
 

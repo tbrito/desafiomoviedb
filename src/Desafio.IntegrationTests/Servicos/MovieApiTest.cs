@@ -10,11 +10,11 @@ namespace Desafio.IntegrationTests.Servicos
     /// <summary>
     /// Testamos a integração com a api do themoviedb
     /// </summary>
-    public class TheMovieDbTest
+    public class MovieApiTest
     {
         private readonly IOptions<EndPoints> endpoints;
 
-        public TheMovieDbTest()
+        public MovieApiTest()
         {
            this.endpoints = Options.Create<EndPoints>(new EndPoints 
            {
@@ -29,7 +29,7 @@ namespace Desafio.IntegrationTests.Servicos
         [Fact]
         public void DeveRetornarEstreias()
         {
-            var theMovieDb = new TheMovieDb(this.endpoints);
+            var theMovieDb = new MovieApi(this.endpoints);
 
             var resultado = theMovieDb.ObterEstreias();
 
@@ -39,31 +39,11 @@ namespace Desafio.IntegrationTests.Servicos
         [Fact]
         public void DeveRetornarEstreiasNaoLimitadoA20Resultados()
         {
-            var theMovieDb = new TheMovieDb(this.endpoints);
+            var theMovieDb = new MovieApi(this.endpoints);
 
             var resultado = theMovieDb.ObterTodasEstreias();
 
             resultado.Filmes.Count.Should().BeGreaterThan(20);
-        }
-
-        [Fact]
-        public void DeveDispararExcecaoCasoNaoExistaParametrosDaApi()
-        {
-            var endpointVazio = Options.Create<EndPoints>(new EndPoints
-            {
-                TheMovieDbSettings = null
-            });
-
-            var theMovieDb = new TheMovieDb(endpointVazio);
-
-            var resultado = theMovieDb
-                .Invoking(y => y.ObterTodasEstreias())
-                .Should()
-                .Throw<InvalidOperationException>()
-                .WithMessage(
-@"Não foi possível estabelecer conexão.
-Parametros de conexão com TheMovieDb.org não foram encontrados.
-Verifique appsettings.json");
         }
     }
 }
